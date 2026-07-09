@@ -1,0 +1,17 @@
+torch
+torchvision
+torchaudio
+transformers
+datasets
+peft
+trl
+accelerate
+nentnnnenincn
+scipy
+evaluate
+tensorboard
+wandb
+huggingface_hub
+safetensors
+# Recommended: ensure accelerate is recent for distributed/k-bit training
+# accelerate>=0.20.3

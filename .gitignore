@@ -1,0 +1,43 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+lora_env/
+
+# Environment files
+.env
+.env.*
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Logs and runtime data
+*.log
+*.out
+*.err
+*.pid
+*.refact
+
+
+# Model / training outputs
+output/
+checkpoints/
+checkpoint-*/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
