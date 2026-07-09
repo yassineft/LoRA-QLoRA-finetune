@@ -1,207 +1,77 @@
----
-base_model: Qwen/Qwen2.5-7B-Instruct
-library_name: peft
-pipeline_tag: text-generation
-tags:
-- base_model:adapter:Qwen/Qwen2.5-7B-Instruct
-- lora
-- transformers
----
+﻿# LoRA Fine-Tuning for Qwen
 
-# Model Card for Model ID
+This project fine-tunes a Qwen instruct model with LoRA/PEFT and provides a simple chat interface for interacting with the adapted model.
 
-<!-- Provide a quick summary of what the model is/does. -->
+## What this project does
 
+- Trains a LoRA adapter on your dataset using main.py
+- Loads the base model plus adapter with load.py
+- Starts a conversational chat loop with chat.py
 
+## Requirements
 
-## Model Details
+- Python 3.10+ recommended
+- A CUDA-capable GPU is strongly recommended for faster training and inference
+- Install dependencies:
 
-### Model Description
+```powershell
+pip install -r requirements.txt
+```
 
-<!-- Provide a longer summary of what this model is. -->
+If you are using PowerShell and activation is blocked, run:
 
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+```
 
+## Setup
 
-- **Developed by:** [More Information Needed]
-- **Funded by [optional]:** [More Information Needed]
-- **Shared by [optional]:** [More Information Needed]
-- **Model type:** [More Information Needed]
-- **Language(s) (NLP):** [More Information Needed]
-- **License:** [More Information Needed]
-- **Finetuned from model [optional]:** [More Information Needed]
+Create and activate a virtual environment:
 
-### Model Sources [optional]
+```powershell
+python -m venv lora_env
+.\lora_env\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
 
-<!-- Provide the basic links for the model. -->
+If the model requires authentication, log in to Hugging Face:
 
-- **Repository:** [More Information Needed]
-- **Paper [optional]:** [More Information Needed]
-- **Demo [optional]:** [More Information Needed]
+```powershell
+huggingface-cli login
+```
 
-## Uses
+## Fine-tune the model
 
-<!-- Address questions around how the model is intended to be used, including the foreseeable users of the model and those affected by the model. -->
+1. Prepare your training data in data_utils.py and the related dataset files such as dataset.json.
+2. Start training with:
 
-### Direct Use
+```powershell
+python main.py
+```
 
-<!-- This section is for the model use without fine-tuning or plugging into a larger ecosystem/app. -->
+Training outputs are written to the output folder. The script saves checkpoints and the final adapter there.
 
-[More Information Needed]
+## Start chatting
 
-### Downstream Use [optional]
+After training has produced an adapter, start the chat interface with:
 
-<!-- This section is for the model use when fine-tuned for a task, or when plugged into a larger ecosystem/app -->
+```powershell
+python chat.py
+```
 
-[More Information Needed]
+You can then type prompts in the terminal. Type exit or quit to stop the session.
 
-### Out-of-Scope Use
+## Notes
 
-<!-- This section addresses misuse, malicious use, and uses that the model will not work well for. -->
+- The chat script uses the adapter in output by default.
+- If you want to use a different adapter directory, update the adapter_dir value in chat.py.
+- If CUDA is unavailable, the scripts will fall back to CPU loading, though training and inference will be slower.
 
-[More Information Needed]
+## Project files
 
-## Bias, Risks, and Limitations
-
-<!-- This section is meant to convey both technical and sociotechnical limitations. -->
-
-[More Information Needed]
-
-### Recommendations
-
-<!-- This section is meant to convey recommendations with respect to the bias, risk, and technical limitations. -->
-
-Users (both direct and downstream) should be made aware of the risks, biases and limitations of the model. More information needed for further recommendations.
-
-## How to Get Started with the Model
-
-Use the code below to get started with the model.
-
-[More Information Needed]
-
-## Training Details
-
-### Training Data
-
-<!-- This should link to a Dataset Card, perhaps with a short stub of information on what the training data is all about as well as documentation related to data pre-processing or additional filtering. -->
-
-[More Information Needed]
-
-### Training Procedure
-
-<!-- This relates heavily to the Technical Specifications. Content here should link to that section when it is relevant to the training procedure. -->
-
-#### Preprocessing [optional]
-
-[More Information Needed]
-
-
-#### Training Hyperparameters
-
-- **Training regime:** [More Information Needed] <!--fp32, fp16 mixed precision, bf16 mixed precision, bf16 non-mixed precision, fp16 non-mixed precision, fp8 mixed precision -->
-
-#### Speeds, Sizes, Times [optional]
-
-<!-- This section provides information about throughput, start/end time, checkpoint size if relevant, etc. -->
-
-[More Information Needed]
-
-## Evaluation
-
-<!-- This section describes the evaluation protocols and provides the results. -->
-
-### Testing Data, Factors & Metrics
-
-#### Testing Data
-
-<!-- This should link to a Dataset Card if possible. -->
-
-[More Information Needed]
-
-#### Factors
-
-<!-- These are the things the evaluation is disaggregating by, e.g., subpopulations or domains. -->
-
-[More Information Needed]
-
-#### Metrics
-
-<!-- These are the evaluation metrics being used, ideally with a description of why. -->
-
-[More Information Needed]
-
-### Results
-
-[More Information Needed]
-
-#### Summary
-
-
-
-## Model Examination [optional]
-
-<!-- Relevant interpretability work for the model goes here -->
-
-[More Information Needed]
-
-## Environmental Impact
-
-<!-- Total emissions (in grams of CO2eq) and additional considerations, such as electricity usage, go here. Edit the suggested text below accordingly -->
-
-Carbon emissions can be estimated using the [Machine Learning Impact calculator](https://mlco2.github.io/impact#compute) presented in [Lacoste et al. (2019)](https://arxiv.org/abs/1910.09700).
-
-- **Hardware Type:** [More Information Needed]
-- **Hours used:** [More Information Needed]
-- **Cloud Provider:** [More Information Needed]
-- **Compute Region:** [More Information Needed]
-- **Carbon Emitted:** [More Information Needed]
-
-## Technical Specifications [optional]
-
-### Model Architecture and Objective
-
-[More Information Needed]
-
-### Compute Infrastructure
-
-[More Information Needed]
-
-#### Hardware
-
-[More Information Needed]
-
-#### Software
-
-[More Information Needed]
-
-## Citation [optional]
-
-<!-- If there is a paper or blog post introducing the model, the APA and Bibtex information for that should go in this section. -->
-
-**BibTeX:**
-
-[More Information Needed]
-
-**APA:**
-
-[More Information Needed]
-
-## Glossary [optional]
-
-<!-- If relevant, include terms and calculations in this section that can help readers understand the model or model card. -->
-
-[More Information Needed]
-
-## More Information [optional]
-
-[More Information Needed]
-
-## Model Card Authors [optional]
-
-[More Information Needed]
-
-## Model Card Contact
-
-[More Information Needed]
-### Framework versions
-
-- PEFT 0.19.1
+- main.py - LoRA training loop
+- chat.py - Interactive chat interface
+- load.py - Model and adapter loading logic
+- config.py - LoRA configuration
+- tokenzer.py - Tokenizer and model settings
+- data_utils.py - Dataset preparation
